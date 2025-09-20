@@ -3,9 +3,9 @@ export const SITE_CONFIG = {
   tagline: "Transform Your Body, Transform Your Life",
   description: "Premier fitness destination offering state-of-the-art equipment, expert personal training, and diverse group classes to help you achieve your fitness goals.",
   contact: {
-    phone: "555-123-4567",
-    email: "info@fitzonegym.com",
-    address: "123 Fitness Street, Muscle City, MC 12345"
+    phone: "03000000000",
+    email: "su92-bssem-f22-218@superior.edu.pk",
+    address: "Johar Town, Lahore, Pakistan"
   },
   hours: {
     weekdays: "5:00 AM - 11:00 PM",

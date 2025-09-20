@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle } from 'lucide-react'
 import { SITE_CONFIG } from '@/lib/constants'
+import NoSSR from './NoSSR'
 
 interface FormData {
   name: string
@@ -35,23 +36,59 @@ export default function ContactSection() {
     e.preventDefault()
     setIsSubmitting(true)
     
-    // Simulate form submission
-    setTimeout(() => {
+    // Simple validation
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      alert('Please fill in all required fields (Name, Email, Message)')
       setIsSubmitting(false)
-      setIsSubmitted(true)
-      
-      // Reset form after success
-      setTimeout(() => {
-        setIsSubmitted(false)
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          service: '',
-          message: ''
-        })
-      }, 3000)
-    }, 2000)
+      return
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(formData.email)) {
+      alert('Please enter a valid email address')
+      setIsSubmitting(false)
+      return
+    }
+    
+    try {
+      // Submit form data to API
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        setIsSubmitting(false)
+        setIsSubmitted(true)
+        
+        // Show success message
+        alert(`${result.message}\n\nSubmitted at: ${result.submittedAt}`)
+        
+        // Reset form after success
+        setTimeout(() => {
+          setIsSubmitted(false)
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            service: '',
+            message: ''
+          })
+        }, 3000)
+      } else {
+        throw new Error(result.error || 'Failed to submit form')
+      }
+    } catch (error) {
+      setIsSubmitting(false)
+      console.error('Form submission error:', error)
+      alert('Failed to submit form. Please try again later or contact us directly at su92-bssem-f22-218@superior.edu.pk')
+    }
   }
 
   const contactInfo = [
@@ -138,28 +175,30 @@ export default function ContactSection() {
 
             {/* Contact Info Cards */}
             <div className="space-y-6 mb-8">
-              {contactInfo.map((info, index) => {
-                const IconComponent = info.icon
-                return (
-                  <motion.a
-                    key={info.title}
-                    href={info.action}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="flex items-center p-6 glass rounded-xl border border-opacity-20 hover:scale-105 transition-all duration-300 group"
-                  >
-                    <div className="bg-accent-blue/20 p-3 rounded-lg mr-4 group-hover:scale-110 transition-transform duration-300">
-                      <IconComponent className="w-6 h-6 text-accent-blue" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-lg mb-1 text-dark-primary">{info.title}</h4>
-                      <p className="text-dark-muted">{info.details}</p>
-                    </div>
-                  </motion.a>
-                )
-              })}
+              <NoSSR fallback={<div className="space-y-6">Loading contact info...</div>}>
+                {contactInfo.map((info, index) => {
+                  const IconComponent = info.icon
+                  return (
+                    <motion.a
+                      key={info.title}
+                      href={info.action}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      className="flex items-center p-6 glass rounded-xl border border-opacity-20 hover:scale-105 transition-all duration-300 group"
+                    >
+                      <div className="bg-accent-blue/20 p-3 rounded-lg mr-4 group-hover:scale-110 transition-transform duration-300">
+                        <IconComponent className="w-6 h-6 text-accent-blue" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-1 text-dark-primary">{info.title}</h4>
+                        <p className="text-dark-muted">{info.details}</p>
+                      </div>
+                    </motion.a>
+                  )
+                })}
+              </NoSSR>
             </div>
 
             {/* Hours of Operation */}
@@ -259,14 +298,19 @@ export default function ContactSection() {
                         name="service"
                         value={formData.service}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 bg-dark-secondary/20 border border-dark-light rounded-lg focus:ring-2 focus:ring-accent-blue focus:border-transparent transition-all text-dark-primary"
+                        className="w-full px-4 py-3 bg-gradient-to-r from-dark-secondary/30 to-dark-secondary/20 border-2 border-dark-light hover:border-accent-emerald/50 focus:border-accent-emerald focus:ring-2 focus:ring-accent-emerald/20 rounded-xl transition-all duration-300 text-dark-primary font-medium shadow-lg hover:shadow-emerald/10 cursor-pointer appearance-none bg-no-repeat bg-right pr-10"
+                        style={{
+                          backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2310b981' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
+                          backgroundPosition: 'right 0.75rem center',
+                          backgroundSize: '1.5rem 1.5rem'
+                        }}
                       >
-                        <option value="">Select a service</option>
-                        <option value="membership">Membership Information</option>
-                        <option value="personal-training">Personal Training</option>
-                        <option value="group-classes">Group Classes</option>
-                        <option value="tour">Facility Tour</option>
-                        <option value="other">Other</option>
+                        <option value="" className="bg-dark-secondary text-dark-muted">Select a service</option>
+                        <option value="membership" className="bg-dark-secondary text-dark-primary hover:bg-accent-emerald/10">💪 Membership Information</option>
+                        <option value="personal-training" className="bg-dark-secondary text-dark-primary hover:bg-accent-emerald/10">🏋️ Personal Training</option>
+                        <option value="group-classes" className="bg-dark-secondary text-dark-primary hover:bg-accent-emerald/10">👥 Group Classes</option>
+                        <option value="tour" className="bg-dark-secondary text-dark-primary hover:bg-accent-emerald/10">🏢 Facility Tour</option>
+                        <option value="other" className="bg-dark-secondary text-dark-primary hover:bg-accent-emerald/10">💬 Other</option>
                       </select>
                     </div>
                   </div>
@@ -318,16 +362,22 @@ export default function ContactSection() {
           <div className="glass rounded-2xl p-8 text-center border border-opacity-20">
             <h3 className="font-display font-bold text-2xl mb-4 text-dark-primary">Find Us</h3>
             <p className="text-dark-muted mb-6 max-w-2xl mx-auto">
-              Located in the heart of the city with easy access to parking and public transportation.
+              Located in the heart of Johar Town, Lahore with easy access to parking and public transportation.
             </p>
             
-            {/* Placeholder for map */}
-            <div className="bg-dark-secondary/30 rounded-xl h-64 flex items-center justify-center border border-dark-light">
-              <div className="text-center">
-                <MapPin className="w-12 h-12 text-accent-blue mx-auto mb-4" />
-                <p className="text-dark-secondary">Interactive Map Coming Soon</p>
-                <p className="text-sm text-dark-muted mt-2">{SITE_CONFIG.contact.address}</p>
-              </div>
+            {/* Google Maps Embed for Johar Town, Lahore */}
+            <div className="bg-dark-secondary/30 rounded-xl overflow-hidden border border-dark-light">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13606.827044525833!2d74.27089!3d31.46946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190184e8d46861%3A0xe9a4b63b1f6bb8b3!2sJohar%20Town%2C%20Lahore%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1695216000000!5m2!1sen!2s"
+                width="100%"
+                height="300"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="rounded-xl"
+                title="FitZone Gym Location - Johar Town, Lahore"
+              />
             </div>
           </div>
         </motion.div>

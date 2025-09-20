@@ -65,7 +65,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, backgroundSize: "0% 100%" }}
               animate={{ opacity: 1, backgroundSize: "100% 100%" }}
               transition={{ duration: 1.2, delay: 0.6 }}
-              className="text-transparent bg-clip-text gradient-emerald relative"
+              className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600 relative"
             >
               Body & Mind
             </motion.span>

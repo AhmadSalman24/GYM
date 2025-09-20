@@ -32,6 +32,26 @@ const itemVariants = {
 }
 
 export default function MembershipSection() {
+  const handlePlanSelection = (planName: string, planPrice: number) => {
+    // Scroll to contact section for membership signup
+    const contactSection = document.querySelector('#contact')
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' })
+    }
+    setTimeout(() => {
+      alert(`You selected the ${planName} plan ($${planPrice}). Please fill out the contact form below to get started with your membership.`)
+    }, 500)
+  }
+
+  const handleFreeConsultation = () => {
+    const contactSection = document.querySelector('#contact')
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' })
+    }
+    setTimeout(() => {
+      alert('Great! Please fill out the contact form below to schedule your free consultation.')
+    }, 500)
+  }
   return (
     <section id="membership" className="py-20 bg-dark-primary text-white relative overflow-hidden">
       {/* Background Elements */}
@@ -167,7 +187,9 @@ export default function MembershipSection() {
                 </ul>
 
                 {/* CTA Button */}
-                <button className={`
+                <button 
+                  onClick={() => handlePlanSelection(plan.name, plan.price)}
+                  className={`
                   w-full py-4 rounded-xl font-semibold text-lg transition-all hover:scale-105
                   ${plan.popular
                     ? 'btn-primary'
@@ -204,17 +226,21 @@ export default function MembershipSection() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button 
-                onClick={() => {
-                  if (typeof window !== 'undefined') {
-                    const element = document.querySelector('#contact')
-                    if (element) element.scrollIntoView({ behavior: 'smooth' })
-                  }
-                }}
+                onClick={handleFreeConsultation}
                 className="btn-primary"
               >
                 Get Free Consultation
               </button>
-              <button className="btn-secondary">
+              <button 
+                onClick={() => {
+                  // Scroll to top of membership section to view all plans
+                  const membershipSection = document.querySelector('#membership')
+                  if (membershipSection) {
+                    membershipSection.scrollIntoView({ behavior: 'smooth' })
+                  }
+                }}
+                className="btn-secondary"
+              >
                 Compare All Plans
               </button>
             </div>

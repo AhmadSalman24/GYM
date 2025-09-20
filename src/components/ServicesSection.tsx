@@ -33,6 +33,26 @@ const itemVariants = {
 }
 
 export default function ServicesSection() {
+  const handleLearnMore = (serviceTitle: string) => {
+    // Scroll to contact section for more information
+    const contactSection = document.getElementById('contact')
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' })
+    }
+    // Show alert with service information
+    alert(`Learn more about ${serviceTitle}! Our team will contact you with detailed information.`)
+  }
+
+  const handleBookConsultation = () => {
+    // Scroll to contact section
+    const contactSection = document.getElementById('contact')
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' })
+    }
+    // Show alert
+    alert('Great choice! Please fill out the contact form below to book your free consultation.')
+  }
+
   return (
     <section id="services" className="py-20 bg-dark-secondary relative overflow-hidden">
       {/* Background Elements */}
@@ -52,7 +72,7 @@ export default function ServicesSection() {
         >
           <h2 className="font-display font-bold text-4xl md:text-5xl text-dark-primary mb-6">
             Everything You Need to
-            <span className="block text-transparent bg-clip-text gradient-emerald">
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600">
               Achieve Your Goals
             </span>
           </h2>
@@ -122,7 +142,10 @@ export default function ServicesSection() {
                   </ul>
 
                   {/* CTA Button */}
-                  <button className="flex items-center text-accent-emerald hover:text-accent-blue font-semibold group-hover:scale-105 transition-all duration-300">
+                  <button 
+                    onClick={() => handleLearnMore(service.title)}
+                    className="flex items-center text-accent-emerald hover:text-accent-blue font-semibold group-hover:scale-105 transition-all duration-300"
+                  >
                     Learn More
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                   </button>
@@ -151,7 +174,10 @@ export default function ServicesSection() {
             <p className="text-xl mb-8 opacity-90">
               Join thousands of members who have transformed their lives with our premium services.
             </p>
-            <button className="px-8 py-4 bg-white/20 hover:bg-white/30 text-white font-semibold rounded-xl backdrop-blur-sm transition-all duration-300 hover:scale-105">
+            <button 
+              onClick={handleBookConsultation}
+              className="px-8 py-4 bg-white/20 hover:bg-white/30 text-white font-semibold rounded-xl backdrop-blur-sm transition-all duration-300 hover:scale-105"
+            >
               Book Your Free Consultation
             </button>
           </div>

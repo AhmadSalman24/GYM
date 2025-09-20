@@ -5,6 +5,27 @@ import { Star, Award, Calendar } from 'lucide-react'
 import { TRAINERS } from '@/lib/constants'
 
 export default function TrainersSection() {
+  const handleBookSession = (trainerName: string) => {
+    // Scroll to contact section for booking
+    const contactSection = document.querySelector('#contact')
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' })
+    }
+    // You could also open a booking modal or redirect to a booking page
+    setTimeout(() => {
+      alert(`Booking session with ${trainerName}. Please fill out the contact form below to schedule your session.`)
+    }, 500)
+  }
+
+  const handleScheduleConsultation = () => {
+    const contactSection = document.querySelector('#contact')
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' })
+    }
+    setTimeout(() => {
+      alert('Please fill out the contact form below to schedule your free consultation.')
+    }, 500)
+  }
   return (
     <section id="trainers" className="py-20 bg-dark-secondary relative overflow-hidden">
       {/* Background Elements */}
@@ -23,7 +44,7 @@ export default function TrainersSection() {
         >
           <h2 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-dark-primary mb-6">
             Our Professional
-            <span className="block text-transparent bg-clip-text gradient-emerald">
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600">
               Trainers
             </span>
           </h2>
@@ -109,6 +130,7 @@ export default function TrainersSection() {
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
+                    onClick={() => handleBookSession(trainer.name)}
                     className="w-full mt-6 btn-secondary group"
                   >
                     <span>Book Session</span>
@@ -142,7 +164,7 @@ export default function TrainersSection() {
               Schedule a consultation with one of our certified trainers and start your 
               personalized fitness journey today.
             </p>
-            <button className="btn-primary">
+            <button className="btn-primary" onClick={handleScheduleConsultation}>
               Schedule Consultation
             </button>
           </div>
