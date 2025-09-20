@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Oswald:wght@200;300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ffffff;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  line-height: 1.7;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+}
+
+/* Typography Improvements */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Oswald', sans-serif;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.font-display {
+  font-family: 'Oswald', sans-serif;
+}
+
+/* Button Styles */
+.btn-primary {
+  padding: 1rem 2rem;
+  background-color: #10b981;
+  color: white;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary:hover {
+  background-color: #059669;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  padding: 1rem 2rem;
+  background-color: transparent;
+  border: 2px solid #10b981;
+  color: #10b981;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-secondary:hover {
+  background-color: #10b981;
+  color: white;
+}
+
+/* Professional Dark Theme Color Palette */
+.bg-dark-primary { background-color: #0a0a0a; }
+.bg-dark-secondary { background-color: #111111; }
+.bg-dark-tertiary { background-color: #1a1a1a; }
+.bg-dark-card { background-color: #161616; }
+.bg-dark-hover { background-color: #222222; }
+
+/* Premium Accent Colors - Easy on the eyes */
+.bg-accent-emerald { background-color: #10b981; }
+.bg-accent-emerald-light { background-color: rgba(16, 185, 129, 0.1); }
+.bg-accent-blue { background-color: #3b82f6; }
+.bg-accent-blue-light { background-color: rgba(59, 130, 246, 0.1); }
+.bg-accent-purple { background-color: #8b5cf6; }
+.bg-accent-purple-light { background-color: rgba(139, 92, 246, 0.1); }
+
+/* Text Colors */
+.text-dark-primary { color: #ffffff; }
+.text-dark-secondary { color: #e5e5e5; }
+.text-dark-muted { color: #a1a1a1; }
+.text-accent-emerald { color: #10b981; }
+.text-accent-blue { color: #3b82f6; }
+.text-accent-purple { color: #8b5cf6; }
+
+/* Border Colors */
+.border-dark { border-color: #333333; }
+.border-dark-light { border-color: #2a2a2a; }
+.border-accent-emerald { border-color: #10b981; }
+
+/* Hover States */
+.hover\:bg-accent-emerald:hover { background-color: #059669; }
+.hover\:bg-accent-blue:hover { background-color: #2563eb; }
+.hover\:bg-accent-purple:hover { background-color: #7c3aed; }
+.hover\:bg-dark-hover:hover { background-color: #222222; }
+
+/* Glass Morphism Effects */
+.glass {
+  backdrop-filter: blur(10px);
+  background: rgba(22, 22, 22, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-light {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradient Backgrounds */
+.gradient-emerald {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.gradient-blue {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.gradient-purple {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+}
+
+.gradient-dark {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+}
+
+/* Custom Shadows */
+.shadow-emerald {
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+}
+
+.shadow-blue {
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+}
+
+.shadow-purple {
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+}
+
+.shadow-dark {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Animation Classes */
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Scroll Bar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555555;
+}
