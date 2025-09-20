@@ -70,7 +70,7 @@ export default function TestimonialsSection() {
           
           <h2 className="font-display font-bold text-4xl md:text-5xl text-dark-primary mb-6">
             What Our Members
-            <span className="block text-transparent bg-clip-text gradient-blue">
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600">
               Are Saying
             </span>
           </h2>

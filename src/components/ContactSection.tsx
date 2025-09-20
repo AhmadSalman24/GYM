@@ -150,7 +150,7 @@ export default function ContactSection() {
           
           <h2 className="font-display font-bold text-4xl md:text-5xl mb-6">
             Ready to Start Your
-            <span className="block text-transparent bg-clip-text gradient-blue">
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600">
               Fitness Journey?
             </span>
           </h2>
